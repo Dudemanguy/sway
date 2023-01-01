@@ -207,7 +207,8 @@ bool server_init(struct sway_server *server) {
 	wlr_primary_selection_v1_device_manager_create(server->wl_display);
 	wlr_viewporter_create(server->wl_display);
 	wlr_single_pixel_buffer_manager_v1_create(server->wl_display);
-	wlr_fractional_scale_manager_v1_create(server->wl_display);
+	server->fractional_scale_manager_v1 =
+		wlr_fractional_scale_manager_v1_create(server->wl_display, 1);
 	server->content_type_manager_v1 =
 		wlr_content_type_manager_v1_create(server->wl_display, 1);
 
