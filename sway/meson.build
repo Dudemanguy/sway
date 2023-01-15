@@ -26,7 +26,6 @@ sway_sources = files(
 	'input/input-manager.c',
 	'input/cursor.c',
 	'input/keyboard.c',
-	'input/libinput.c',
 	'input/seat.c',
 	'input/seatop_default.c',
 	'input/seatop_down.c',
@@ -87,6 +86,7 @@ sway_sources = files(
 	'commands/nop.c',
 	'commands/output.c',
 	'commands/popup_during_fullscreen.c',
+	'commands/primary_selection.c',
 	'commands/reload.c',
 	'commands/rename.c',
 	'commands/resize.c',
@@ -167,6 +167,7 @@ sway_sources = files(
 	'commands/input/middle_emulation.c',
 	'commands/input/natural_scroll.c',
 	'commands/input/pointer_accel.c',
+        'commands/input/rotation_angle.c',
 	'commands/input/repeat_delay.c',
 	'commands/input/repeat_rate.c',
 	'commands/input/scroll_button.c',
@@ -227,12 +228,16 @@ sway_deps = [
 	wayland_server,
 	wlroots,
 	xkbcommon,
+	xcb,
 	xcb_icccm,
 ]
 
 if have_xwayland
 	sway_sources += 'desktop/xwayland.c'
-	sway_deps += xcb
+endif
+
+if wlroots_features['libinput_backend']
+	sway_sources += 'input/libinput.c'
 endif
 
 executable(
